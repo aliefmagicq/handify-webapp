@@ -1,8 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
-
 :root {
   --background: oklch(0.9911 0 0);
   --foreground: oklch(0.2046 0 0);
@@ -37,7 +36,7 @@
   --sidebar-border: oklch(0.9037 0 0);
   --sidebar-ring: oklch(0.8348 0.1302 160.908);
   --font-sans: Outfit, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono: monospace;
   --radius: 0.45rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
@@ -64,7 +63,7 @@
   --card-foreground: oklch(0.9288 0.0126 255.5078);
   --popover: oklch(0.2603 0 0);
   --popover-foreground: oklch(0.7348 0 0);
-  --primary: oklch(0.508 0.118 165.612);
+  --primary: oklch(0.432 0.095 166.913);
   --primary-foreground: oklch(0.9213 0.0135 167.1556);
   --secondary: oklch(0.2603 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
@@ -91,7 +90,7 @@
   --sidebar-border: oklch(0.2809 0 0);
   --sidebar-ring: oklch(0.8003 0.1821 151.711);
   --font-sans: Outfit, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono: monospace;
   --radius: 0.45rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
@@ -179,5 +178,41 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  h1 {
+    @apply text-3xl tracking-wide font-medium;
+  }
+  h2 {
+    @apply text-2xl tracking-wide font-medium;
+  }
+  h3 {
+    @apply text-xl tracking-wide font-medium;
+  }
+  h4 {
+    @apply text-lg tracking-wide font-medium;
+  }
+  h5 {
+    @apply text-sm tracking-wide font-medium;
+  }
+  p {
+    @apply text-sm tracking-wide;
+  }
+  span {
+    @apply text-xs tracking-wide sm:text-sm;
+  }
+
+  ul li {
+    @apply text-xs tracking-wide sm:text-sm;
+  }
+
+  label {
+    @apply text-sm tracking-wide;
+  }
+
+  Button {
+    @apply cursor-pointer;
   }
 }
