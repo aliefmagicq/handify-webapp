@@ -1,10 +1,19 @@
 import z from 'zod';
 
+export const loginSchema = z.object({
+  email: z.email().min(2, { message: 'Must have at least 2 characters' }),
+  password: z.string().min(8, { message: 'Must have at least 8 characters' }),
+});
+
 const passwordValidation = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 );
 
-export const formSchema = z.object({
+export const registerSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: 'Must have at least 2 characters' })
+    .max(50),
   email: z.email().min(2, { message: 'Must have at least 2 characters' }),
   password: z
     .string()

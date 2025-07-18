@@ -1,5 +1,4 @@
 'use client';
-import { FaGoogle } from 'react-icons/fa';
 
 import {
   Card,
@@ -22,8 +21,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
-import { logIn } from '@/actions/login-action';
-import { formSchema } from '@/schemas/login-form';
+import { signIn, signInWithOAuth } from '@/actions/auth-action';
+import { loginSchema } from '@/schemas/auth.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useState, useTransition } from 'react';
@@ -36,17 +35,17 @@ const LoginForm = () => {
   const [isPending, setTransition] = useTransition();
   const [isError, setIsError] = useState<string>('');
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
     setTransition(async () => {
-      await logIn(values).then(data => {
+      await signIn(values).then(data => {
         setIsError(data && data.error && data.error);
         if (data.error) toast.error(data.error);
       });
@@ -60,7 +59,7 @@ const LoginForm = () => {
           <span className="opacity-60">Don&apos;t have an account?</span>
           <span
             className="cursor-pointer opacity-60 hover:opacity-100"
-            onClick={() => router.push('/auth/register')}
+            onClick={() => router.push('/auth/sign-up')}
           >
             Sign up
           </span>
@@ -112,13 +111,17 @@ const LoginForm = () => {
             {isError && <span className="opacity-60">{isError}</span>}
           </div>
 
-          <Button disabled={isPending}>LogIn</Button>
-
-          <Button disabled={isPending} variant="outline">
-            <FaGoogle />
-          </Button>
+          <Button disabled={isPending}>Sign In</Button>
         </form>
       </Form>
+      <Button
+        className="w-full mt-4"
+        variant="outline"
+        disabled={isPending}
+        onClick={() => signInWithOAuth('google')}
+      >
+        Sign in With Google
+      </Button>
     </CardFormLogin>
   );
 };
@@ -135,8 +138,12 @@ const CardFormLogin = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Login</CardTitle>
-        <CardDescription>to continue to Handify</CardDescription>
+        <CardTitle>
+          <h3>Sign In</h3>
+        </CardTitle>
+        <CardDescription>
+          Welcome to handify, Sign in to continue
+        </CardDescription>
         <CardAction>Handify</CardAction>
       </CardHeader>
       <CardContent>{children}</CardContent>
