@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 
 const manropeSans = Manrope({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export default function RootLayout({
         <header></header>
         <main>{children}</main>
         <footer></footer>
+        <Toaster />
       </body>
     </html>
   );

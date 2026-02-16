@@ -2,8 +2,8 @@ import postgres from 'postgres';
 import 'dotenv/config';
 
 const dbUrl = process.env.DATABASE_URL;
-if (!dbUrl) throw new Error("Couldn't find db url");
 
+if (!dbUrl) throw new Error("Couldn't find db url");
 const sql = postgres(dbUrl);
 
 const main = async () => {
@@ -11,9 +11,9 @@ const main = async () => {
         create or replace function public.handle_new_user()
         returns trigger as $$
         begin
-            insert into public.users (id, email)
-            values (new.id, new.email);
-            return new;
+          insert into public.users (id, email, password, name)
+          values (new.id, new.email, new.encrypted_password, new.raw_user_meta_data ->> 'name');
+          return new;
         end;
         $$ language plpgsql security definer;
         `;
@@ -36,8 +36,8 @@ const main = async () => {
 
   await sql`
         create or replace trigger on_user_deleted
-            after delete on public.users
-            for each row execute procedure public.handle_user_delete()
+          after delete on public.users
+          for each row execute procedure public.handle_user_delete();
         `;
 
   console.log('Finished adding triggers and functions for profile handling.');
